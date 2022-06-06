@@ -12,7 +12,7 @@ public class ClientServiceImpl implements ClientService {
 
     private final ToolService toolService;
     private final Client client;
-    private final Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner;
 
     @Override
     public void buyTool() {

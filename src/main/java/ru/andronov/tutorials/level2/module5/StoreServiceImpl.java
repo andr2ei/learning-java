@@ -26,7 +26,7 @@ public class StoreServiceImpl implements StoreService {
 
         Client client = new Client("Andrei", 25);
 
-        ClientService clientService = new ClientServiceImpl(toolService, client);
+        ClientService clientService = new ClientServiceImpl(toolService, client, scanner);
 
         System.out.println("Welcome to our store!");
         while (true) {
