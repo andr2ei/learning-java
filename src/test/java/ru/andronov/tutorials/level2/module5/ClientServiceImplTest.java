@@ -6,8 +6,6 @@ import ru.andronov.tutorials.level2.module5.domain.Client;
 
 import java.util.Scanner;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class ClientServiceImplTest {
 
     @Test
