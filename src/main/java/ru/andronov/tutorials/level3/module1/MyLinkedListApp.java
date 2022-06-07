@@ -9,5 +9,12 @@ public class MyLinkedListApp {
         list.add(new Cat("name1", 12));
         list.add(new Cat("name1", 13));
         list.add(new Cat("name1", 14));
+        System.out.println("list.toString() = " + list.toString());
+
+        list.remove(new Cat("name1", 11));
+        System.out.println("list.toString() = " + list.toString());
+
+        Object retrieved = list.get(1);
+        System.out.println("retrieved = " + retrieved);
     }
 }
