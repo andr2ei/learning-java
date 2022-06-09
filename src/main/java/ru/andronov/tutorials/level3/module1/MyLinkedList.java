@@ -48,23 +48,22 @@ public class MyLinkedList {
 
     public boolean remove(Object o) {
         LinkedListNode current = headNode;
-        if (o.equals(current.getValue())) {
-            headNode = headNode.getRight();
-            size--;
-            return true;
-        }
-        while(current.getRight() != null) {
+        while(current != null) {
             if (current.getValue().equals(o)) {
                 LinkedListNode left = current.getLeft();
                 LinkedListNode right = current.getRight();
                 if (current == tailNode) {
                     tailNode.getLeft().setRight(null);
+                } else if (current == headNode) {
+                    headNode = right;
                 } else {
                     right.setLeft(left);
                     left.setRight(right);
                 }
                 size--;
                 return true;
+            } else {
+                current = current.getRight();
             }
         }
         return false;
@@ -88,29 +87,6 @@ public class MyLinkedList {
             j++;
         }
         return null;
-    }
-
-    public Object set(int i, Object o) {
-        if (i < 0 || i > size-1) throw new ArrayIndexOutOfBoundsException();
-        return null;
-    }
-
-    public void add(int i, Object o) {
-        if (i < 0 || i > size-1) throw new ArrayIndexOutOfBoundsException();
-
-    }
-
-    public Object remove(int i) {
-        if (i < 0 || i > size-1) throw new ArrayIndexOutOfBoundsException();
-        return null;
-    }
-
-    public int indexOf(Object o) {
-        return 0;
-    }
-
-    public int lastIndexOf(Object o) {
-        return 0;
     }
 
     public String toString() {
