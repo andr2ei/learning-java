@@ -25,11 +25,16 @@ import java.util.List;
 
 public class Triangle {
     public static void main(String[] args) {
+//        List<List<Integer>> triangle = List.of(
+//                List.of(2),
+//                List.of(3,4),
+//                List.of(6,5,7),
+//                List.of(4,1,8,3));
         List<List<Integer>> triangle = List.of(
                 List.of(2),
                 List.of(3,4),
-                List.of(6,5,7),
-                List.of(4,1,8,3));
+                List.of(6,5,9),
+                List.of(4,4,8,0));
         System.out.println("minimumTotal(triangle) = " + minimumTotal(triangle));
     }
 
@@ -40,21 +45,28 @@ public class Triangle {
                         new ArrayList<>(List.of(triangle.get(0).get(0))))));
         for (int level = 1; level < triangle.size(); level++) {
             List<Integer> levelList = triangle.get(level);
+            List<Integer> prevLevelList = triangle.get(level-1);
 
             List<List<Integer>> prevPathsLevel = paths.get(level-1);
+            List<List<Integer>> newPathsLevel = new ArrayList<>();
+            paths.add(newPathsLevel);
 
-            paths.add(new ArrayList<>());
+            for (int elemIndex = 0; elemIndex < prevLevelList.size(); elemIndex ++) {
+                for (int i = 0; i < prevPathsLevel.size(); i++) {
+                    List<Integer> prevPathsElems = prevPathsLevel.get(i);
+                    if (prevPathsElems.get(prevPathsElems.size() - 1).equals(prevLevelList.get(elemIndex))) {
+                        List<Integer> prevElements = prevPathsLevel.get(i);
 
-            List<List<Integer>> currentPathsLevel = paths.get(level);
+                        List<Integer> prevElementsCopy1 = new ArrayList<>(prevElements);
+                        List<Integer> prevElementsCopy2 = new ArrayList<>(prevElements);
 
-            for (int elemIndex = 0; elemIndex < levelList.size() - 1; elemIndex ++) {
-                List<Integer> prevElements = prevPathsLevel.get(elemIndex);
-                List<Integer> prevElementsCopy1 = new ArrayList<>(prevElements);
-                List<Integer> prevElementsCopy2 = new ArrayList<>(prevElements);
-                prevElementsCopy1.add(triangle.get(level).get(elemIndex));
-                prevElementsCopy2.add(triangle.get(level).get(elemIndex+1));
-                currentPathsLevel.add(prevElementsCopy1);
-                currentPathsLevel.add(prevElementsCopy2);
+                        prevElementsCopy1.add(levelList.get(elemIndex));
+                        prevElementsCopy2.add(levelList.get(elemIndex + 1));
+
+                        newPathsLevel.add(prevElementsCopy1);
+                        newPathsLevel.add(prevElementsCopy2);
+                    }
+                }
             }
         }
         List<List<Integer>> lastLevelPaths = paths.get(paths.size() - 1);
