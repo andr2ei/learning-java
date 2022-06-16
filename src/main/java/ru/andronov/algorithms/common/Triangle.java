@@ -1,6 +1,10 @@
 package ru.andronov.algorithms.common;
 
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,30 +42,47 @@ public class Triangle {
         System.out.println("minimumTotal(triangle) = " + minimumTotal(triangle));
     }
 
+    public static class KeyListPair {
+        public KeyListPair(Integer key, List<Integer> list) {
+            this.key = key;
+            this.list = list;
+        }
+
+        private final Integer key;
+        private final List<Integer> list;
+
+        public Integer getKey() {
+            return key;
+        }
+
+        public List<Integer> getList() {
+            return list;
+        }
+    }
+
     public static int minimumTotal(List<List<Integer>> triangle) {
-        List<List<List<Integer>>> paths = new ArrayList<>();
+        List<List<KeyListPair>> paths = new ArrayList<>();
         paths.add(
                 new ArrayList<>(List.of(
-                        new ArrayList<>(List.of(triangle.get(0).get(0))))));
+                        new KeyListPair(0, new ArrayList<>(List.of(triangle.get(0).get(0)))))));
         for (int level = 1; level < triangle.size(); level++) {
             List<Integer> levelList = triangle.get(level);
             List<Integer> prevLevelList = triangle.get(level-1);
 
-            List<List<Integer>> prevPathsLevel = paths.get(level-1);
-            List<List<Integer>> newPathsLevel = new ArrayList<>();
+            List<KeyListPair> prevPathsLevel = paths.get(level-1);
+            List<KeyListPair> newPathsLevel = new ArrayList<>();
             paths.add(newPathsLevel);
 
             for (int elemIndex = 0; elemIndex < prevLevelList.size(); elemIndex ++) {
                 for (int i = 0; i < prevPathsLevel.size(); i++) {
-                    List<Integer> prevPathsElems = prevPathsLevel.get(i);
-                    if (prevPathsElems.get(prevPathsElems.size() - 1).equals(prevLevelList.get(elemIndex))) {
-                        List<Integer> prevElements = prevPathsLevel.get(i);
+                    KeyListPair prevElements = prevPathsLevel.get(i);
+                    if (prevElements.getKey().equals(elemIndex)) {
 
-                        List<Integer> prevElementsCopy1 = new ArrayList<>(prevElements);
-                        List<Integer> prevElementsCopy2 = new ArrayList<>(prevElements);
+                        KeyListPair prevElementsCopy1 = new KeyListPair(elemIndex, new ArrayList<>(prevElements.getList()));
+                        KeyListPair prevElementsCopy2 = new KeyListPair(elemIndex+1, new ArrayList<>(prevElements.getList()));
 
-                        prevElementsCopy1.add(levelList.get(elemIndex));
-                        prevElementsCopy2.add(levelList.get(elemIndex + 1));
+                        prevElementsCopy1.getList().add(levelList.get(elemIndex));
+                        prevElementsCopy2.getList().add(levelList.get(elemIndex + 1));
 
                         newPathsLevel.add(prevElementsCopy1);
                         newPathsLevel.add(prevElementsCopy2);
@@ -69,9 +90,9 @@ public class Triangle {
                 }
             }
         }
-        List<List<Integer>> lastLevelPaths = paths.get(paths.size() - 1);
+        List<KeyListPair> lastLevelPaths = paths.get(paths.size() - 1);
         return lastLevelPaths.stream()
-                .map((List<Integer> curPaths) -> curPaths.stream().mapToInt(Integer::intValue).sum())
+                .map((KeyListPair curPaths) -> curPaths.getList().stream().mapToInt(Integer::intValue).sum())
                 .min(Integer::compare).get();
     }
 }
