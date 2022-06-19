@@ -1,10 +1,6 @@
 package ru.andronov.algorithms.common;
 
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,11 +25,6 @@ import java.util.List;
 
 public class Triangle {
     public static void main(String[] args) {
-//        List<List<Integer>> triangle = List.of(
-//                List.of(2),
-//                List.of(3,4),
-//                List.of(6,5,7),
-//                List.of(4,1,8,3));
         List<List<Integer>> triangle = List.of(
                 List.of(2),
                 List.of(3,4),

@@ -11,14 +11,13 @@ public class Fibonacci {
     }
 
     public static int fib(int n) {
-        if (n < 0) throw new IllegalArgumentException("n cannot be negative");
-        int a = 0, b = 1, c;
-        int i = 2;
+        if (n < 1) throw new IllegalArgumentException("n cannot be negative");
+        if (n == 1) return 0;
+        int a = 0, b = 1, i = 2;
         while (i != n) {
-            c = a + b;
+            b = a + b;
+            a = b - a;
             i++;
-            a = b;
-            b = c;
         }
         return b;
     }
