@@ -3,23 +3,24 @@ package ru.andronov.algorithms.common;
 public class LongestSubstringWithoutRepeatingChar {
 
     public static void main(String[] args) {
-        var str = "pwwkew";
+        var str = "abcabcbb";
         var obj = new LongestSubstringWithoutRepeatingChar();
         System.out.println("obj.lengthOfLongestSubstring(str) = " + obj.lengthOfLongestSubstring(str));
     }
 
     public int lengthOfLongestSubstring(String s) {
         var chars = s.toCharArray();
-        int longest = 0;
+        if (chars.length == 0) return 0;
+        int longest = 1;
         for (int i = 0; i < chars.length; i++) {
-            var sb = new StringBuilder();
-            for (int j = i; j < chars.length; j++) {
-                if (sb.toString().contains(Character.toString(chars[j]))) {
+            for (int j = i + 1; j < chars.length; j++) {
+                var sbStr = s.substring(i, j);
+                if (sbStr.contains(Character.toString(chars[j]))) {
                     break;
                 } else {
-                    sb.append(chars[j]);
-                    if (sb.length() > longest) {
-                        longest = sb.length();
+                    var newSbStrLenght = s.substring(i, j + 1).length();
+                    if (newSbStrLenght > longest) {
+                        longest = newSbStrLenght;
                     }
                 }
             }
