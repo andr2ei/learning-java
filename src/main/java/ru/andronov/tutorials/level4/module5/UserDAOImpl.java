@@ -6,17 +6,16 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public int printProductNameById(Integer id) throws SQLException {
-        try(Connection con = DriverManager.getConnection(JDBC.URL, JDBC.USER, JDBC.password)) {
-            String sql = "SELECT * FROM products WHERE id = ?";
+        try(Connection con = DBCP.getConnection()){
+            String sql = "SELECT * FROM products WHERE product_id = ?";
             try (PreparedStatement st = con.prepareStatement(sql)) {
                 st.setInt(1, id);
-                try(ResultSet resultSet = st.executeQuery()) {
+                try (ResultSet resultSet = st.executeQuery()) {
                     while (resultSet.next()) {
-                        System.out.println("resultSet.getString(\"name\") = " + resultSet.getString("name"));
+                        System.out.println("resultSet.getString(\"product_name\") = " + resultSet.getString("product_name"));
                     }
                 }
             }
-
         }
         return 0;
     }
